@@ -11,12 +11,11 @@ function App() {
 	let { info, results } = fetchedData;
 	let [pageNumber, updatePageNumber] = useState(1);
 	let [search, setSearch] = useState("");
-	let [status, updateStatus] = useState("");
-	let [gender, updateGender] = useState("");
-	let [species, updateSpecies] = useState("");
+	let [status] = useState("");
+	let [gender] = useState("");
+	let [species] = useState("");
 
 	let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`;
-	//call the api again when the page number changes
 
 	useEffect(() => {
 		(async function () {
@@ -27,7 +26,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<h1 className="webTitle">Rick and Morty characters</h1>
+			<div className="webTitle">Rick and Morty characters</div>
 			<Search setSearch={setSearch} updatePageNumber={updatePageNumber} />
 			<Table data={results} />
 			<Pagination

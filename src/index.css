@@ -12,6 +12,8 @@ body {
 	display: flex;
 	justify-content: center;
 	padding: 20px;
+	font-size: 40px;
+	font-family: "Montserrat";
 }
 .App {
 	background-color: #0a222d;
