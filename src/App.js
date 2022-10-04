@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
+import Search from "./components/Search/Search";
+import Pagination from "./components/Pagination/Pagination";
+import Table from "./components/Table/Table";
+import React, { useState, useEffect } from "react";
+import "./index.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	let [fetchedData, updateFetchedData] = useState([]);
+	let { info, results } = fetchedData;
+	let [pageNumber, updatePageNumber] = useState(1);
+	let [search, setSearch] = useState("");
+	let [status, updateStatus] = useState("");
+	let [gender, updateGender] = useState("");
+	let [species, updateSpecies] = useState("");
+
+	let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`;
+	//call the api again when the page number changes
+
+	useEffect(() => {
+		(async function () {
+			let data = await fetch(api).then((res) => res.json());
+			updateFetchedData(data);
+		})();
+	}, [api, pageNumber, search]);
+
+	return (
+		<div className="App">
+			<h1 className="webTitle">Rick and Morty characters</h1>
+			<Search setSearch={setSearch} updatePageNumber={updatePageNumber} />
+			<Table data={results} />
+			<Pagination
+				info={info}
+				pageNumber={pageNumber}
+				updatePageNumber={updatePageNumber}
+			/>
+		</div>
+	);
 }
 
 export default App;
